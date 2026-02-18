@@ -3,19 +3,23 @@ import AuthPage from './AuthPage';
 import Dashboard from './Dashboard';
 import MyReports from './MyReports';
 import AdminDashboard from './AdminDashboard';
+import AnalyticsPage from './AnalyticsPage';
+import ProjectView from './ProjectView';
 import AppSidebar from '@/components/AppSidebar';
 import HamburgerMenu from '@/components/HamburgerMenu';
 import SubmitModal from '@/components/SubmitModal';
 import FAB from '@/components/FAB';
 
 const Index = () => {
-  const { user, page } = useApp();
+  const { user, page, selectedProject } = useApp();
 
   if (!user) return <AuthPage />;
 
   let content;
-  if (user.is_admin) {
-    content = <AdminDashboard />;
+  if (selectedProject) {
+    content = <ProjectView />;
+  } else if (user.is_admin) {
+    content = page === 'analytics' ? <AnalyticsPage /> : <AdminDashboard />;
   } else if (page === 'myreports') {
     content = <MyReports />;
   } else {

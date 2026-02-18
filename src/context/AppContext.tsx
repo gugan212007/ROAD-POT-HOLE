@@ -10,6 +10,7 @@ interface AppState {
   modal: boolean;
   mobileMenu: boolean;
   gps: { lat: number; lng: number } | null;
+  selectedProject: string | null;
 }
 
 interface AppContextType extends AppState {
@@ -24,6 +25,7 @@ interface AppContextType extends AppState {
   submitReport: (description: string, gps: { lat: number; lng: number } | null, photo: File | null) => Promise<void>;
   updateStatus: (id: string, status: string) => void;
   captureGps: () => void;
+  selectProject: (name: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -43,6 +45,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     modal: false,
     mobileMenu: false,
     gps: null,
+    selectedProject: null,
   });
 
   const set = useCallback((patch: Partial<AppState>) => {
@@ -56,6 +59,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       reports: DEMO_REPORTS,
       page: isAdmin ? 'admin' : 'dashboard',
       filter: 'all',
+      selectedProject: null,
     });
     toast.success(`Signed in as ${isAdmin ? 'Administrator' : 'Citizen'} (Demo)`);
   }, [set]);
@@ -66,12 +70,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [demoLogin]);
 
   const signOut = useCallback(() => {
-    set({ user: null, reports: [], page: 'dashboard', mobileMenu: false });
+    set({ user: null, reports: [], page: 'dashboard', mobileMenu: false, selectedProject: null });
     toast.info('Signed out successfully');
   }, [set]);
 
   const navigate = useCallback((page: string) => {
-    set({ page, filter: 'all', mobileMenu: false });
+    set({ page, filter: 'all', mobileMenu: false, selectedProject: null });
+  }, [set]);
+
+  const selectProject = useCallback((name: string | null) => {
+    set({ selectedProject: name, filter: 'all', mobileMenu: false });
+    if (name) toast.info(`Viewing reports for ${name}`);
   }, [set]);
 
   const submitReport = useCallback(async (description: string, gps: { lat: number; lng: number } | null, _photo: File | null) => {
@@ -116,7 +125,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       openModal: () => set({ modal: true, gps: null }),
       closeModal: () => set({ modal: false }),
       toggleMenu: () => set({ mobileMenu: !state.mobileMenu }),
-      submitReport, updateStatus, captureGps,
+      submitReport, updateStatus, captureGps, selectProject,
     }}>
       {children}
     </AppContext.Provider>
