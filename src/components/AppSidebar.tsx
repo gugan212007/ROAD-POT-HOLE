@@ -2,7 +2,7 @@ import { useApp } from '@/context/AppContext';
 import { initials, PROJECTS, PROJECT_COLORS } from '@/lib/demo-data';
 
 const AppSidebar = () => {
-  const { user, page, mobileMenu, navigate, signOut } = useApp();
+  const { user, page, mobileMenu, selectedProject, navigate, signOut, selectProject } = useApp();
   if (!user) return null;
 
   const items = user.is_admin
@@ -45,7 +45,7 @@ const AppSidebar = () => {
           key={n.pg}
           onClick={() => navigate(n.pg)}
           className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] border border-transparent w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${
-            page === n.pg
+            page === n.pg && !selectedProject
               ? 'bg-white/[0.18] text-white font-semibold border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
               : 'text-white/55 hover:bg-white/10 hover:text-white/90 hover:translate-x-0.5'
           }`}
@@ -60,7 +60,12 @@ const AppSidebar = () => {
       {PROJECTS.map((p, i) => (
         <button
           key={p.name}
-          className="flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] w-full text-left text-sm font-medium text-white/55 hover:bg-white/10 hover:text-white/90 transition-all opacity-90 relative z-10"
+          onClick={() => selectProject(selectedProject === p.name ? null : p.name)}
+          className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${
+            selectedProject === p.name
+              ? 'bg-white/[0.18] text-white font-semibold border border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
+              : 'text-white/55 hover:bg-white/10 hover:text-white/90 border border-transparent opacity-90'
+          }`}
         >
           <span className="w-5 text-center shrink-0">
             <span className="inline-block w-2 h-2 rounded-full" style={{ background: PROJECT_COLORS[i % PROJECT_COLORS.length] }} />
