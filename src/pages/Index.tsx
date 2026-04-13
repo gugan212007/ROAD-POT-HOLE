@@ -2,12 +2,14 @@ import { useApp } from '@/context/AppContext';
 import AuthPage from './AuthPage';
 import Dashboard from './Dashboard';
 import MyReports from './MyReports';
+import NearMe from './NearMe';
 import AdminDashboard from './AdminDashboard';
 import AnalyticsPage from './AnalyticsPage';
 import ProjectView from './ProjectView';
 import AppSidebar from '@/components/AppSidebar';
 import HamburgerMenu from '@/components/HamburgerMenu';
 import SubmitModal from '@/components/SubmitModal';
+import ReportDetailModal from '@/components/ReportDetailModal';
 import FAB from '@/components/FAB';
 
 const Index = () => {
@@ -22,6 +24,8 @@ const Index = () => {
     content = page === 'analytics' ? <AnalyticsPage /> : <AdminDashboard />;
   } else if (page === 'myreports') {
     content = <MyReports />;
+  } else if (page === 'nearme') {
+    content = <NearMe />;
   } else {
     content = <Dashboard />;
   }
@@ -30,11 +34,12 @@ const Index = () => {
     <div className="flex min-h-screen" style={{ background: 'hsl(var(--body-bg))' }}>
       <HamburgerMenu />
       <AppSidebar />
-      <div className="md:ml-[260px] flex-1 min-h-screen bg-card flex flex-col" style={{ boxShadow: '-4px 0 40px hsl(271 45% 44% / 0.08)' }}>
+      <div className="md:ml-[260px] flex-1 min-h-screen bg-card flex flex-col border-0" style={{ boxShadow: '-4px 0 40px hsl(271 45% 44% / 0.08)' }}>
         {content}
       </div>
       <FAB />
       <SubmitModal />
+      <ReportDetailModal />
     </div>
   );
 };

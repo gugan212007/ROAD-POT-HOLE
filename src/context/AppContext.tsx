@@ -11,6 +11,7 @@ interface AppState {
   mobileMenu: boolean;
   gps: { lat: number; lng: number } | null;
   selectedProject: string | null;
+  selectedReport: Report | null;
 }
 
 interface AppContextType extends AppState {
@@ -26,6 +27,7 @@ interface AppContextType extends AppState {
   updateStatus: (id: string, status: string) => void;
   captureGps: () => void;
   selectProject: (name: string | null) => void;
+  viewReport: (report: Report | null) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -46,6 +48,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     mobileMenu: false,
     gps: null,
     selectedProject: null,
+    selectedReport: null,
   });
 
   const set = useCallback((patch: Partial<AppState>) => {
@@ -83,13 +86,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (name) toast.info(`Viewing reports for ${name}`);
   }, [set]);
 
-  const submitReport = useCallback(async (description: string, gps: { lat: number; lng: number } | null, _photo: File | null) => {
+  const submitReport = useCallback(async (description: string, gps: { lat: number; lng: number } | null, photo: File | null) => {
     if (!description.trim()) { toast.error('Please add a description'); return; }
     await new Promise(r => setTimeout(r, 850));
+
+    // Convert uploaded photo to a blob URL so it persists in the app
+    let imageUrl: string | null = null;
+    if (photo) {
+      imageUrl = URL.createObjectURL(photo);
+    }
+
     const nr: Report = {
       id: Date.now().toString(),
       user_id: state.user!.id,
-      image_url: null,
+      image_url: imageUrl,
       latitude: gps?.lat || 28.6139,
       longitude: gps?.lng || 77.2090,
       description,
@@ -117,6 +127,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   }, [set]);
 
+  const viewReport = useCallback((report: Report | null) => {
+    set({ selectedReport: report });
+  }, [set]);
+
   return (
     <AppContext.Provider value={{
       ...state,
@@ -125,7 +139,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       openModal: () => set({ modal: true, gps: null }),
       closeModal: () => set({ modal: false }),
       toggleMenu: () => set({ mobileMenu: !state.mobileMenu }),
-      submitReport, updateStatus, captureGps, selectProject,
+      submitReport, updateStatus, captureGps, selectProject, viewReport,
     }}>
       {children}
     </AppContext.Provider>

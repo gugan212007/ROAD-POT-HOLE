@@ -13,9 +13,7 @@ const AnalyticsPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-8 pt-5 pb-0 border-b border-border animate-fade-up max-[768px]:px-4 max-[768px]:pt-3.5 max-[768px]:pl-[62px] max-[480px]:pl-[58px] max-[480px]:px-3">
-        <div className="text-xs text-muted-foreground flex items-center gap-1.5">📊 Analytics Overview</div>
-      </div>
+
 
       <div className="px-8 py-6 border-b border-border animate-fade-up max-[768px]:px-4 max-[768px]:py-4 max-[480px]:px-3">
         <h1 className="text-[28px] font-extrabold tracking-tight max-[768px]:text-[22px] max-[480px]:text-xl">Analytics</h1>

@@ -23,14 +23,15 @@ interface Props {
 }
 
 const ReportCard = ({ report: r, isAdmin, delay = 0 }: Props) => {
-  const { updateStatus } = useApp();
+  const { updateStatus, viewReport } = useApp();
   const idx = parseInt(r.id) % 5;
   const sc = statusClass(r.status);
 
   return (
     <div
-      className="bg-card border border-border rounded-lg overflow-hidden shadow-card-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-card-lg hover:border-accent/20 cursor-pointer animate-fade-up"
-      style={{ animationDelay: `${delay * 0.06}s` }}
+      className="bg-card border border-border rounded-lg overflow-hidden shadow-card-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-card-lg hover:border-accent/20 cursor-pointer animate-fade-up outline-none"
+      style={{ animationDelay: `${delay * 0.06}s`, WebkitTapHighlightColor: 'transparent' }}
+      onClick={() => viewReport(r)}
     >
       {r.image_url ? (
         <img src={r.image_url} className="w-full h-[168px] object-cover block" alt="Report" />
@@ -51,7 +52,8 @@ const ReportCard = ({ report: r, isAdmin, delay = 0 }: Props) => {
           {isAdmin && (
             <select
               value={r.status}
-              onChange={e => updateStatus(r.id, e.target.value)}
+              onChange={e => { e.stopPropagation(); updateStatus(r.id, e.target.value); }}
+              onClick={e => e.stopPropagation()}
               className="px-2.5 py-1 rounded-xs border border-border bg-secondary/50 text-muted-foreground text-xs cursor-pointer outline-none transition-all hover:border-accent/30 focus:border-accent focus:ring-2 focus:ring-accent/10"
             >
               <option value="pending">Pending</option>

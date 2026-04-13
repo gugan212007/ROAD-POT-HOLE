@@ -22,22 +22,18 @@ const ProjectView = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-8 pt-5 pb-0 border-b border-border animate-fade-up max-[768px]:px-4 max-[768px]:pt-3.5 max-[768px]:pl-[62px] max-[480px]:pl-[58px] max-[480px]:px-3">
-        <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-          📁 Project <span className="text-muted-foreground/50">·</span> {selectedProject}
-        </div>
-        <button
-          onClick={() => selectProject(null)}
-          className="px-3.5 py-1.5 rounded-xs border border-border bg-card text-muted-foreground text-[13px] font-semibold shadow-xs hover:border-accent/30 hover:text-accent transition-all"
-        >
-          ← Back
-        </button>
-      </div>
-
       <div className="px-8 py-6 border-b border-border animate-fade-up max-[768px]:px-4 max-[768px]:py-4 max-[480px]:px-3">
-        <h1 className="text-[28px] font-extrabold tracking-tight max-[768px]:text-[22px] max-[480px]:text-xl">
-          {selectedProject}
-        </h1>
+        <div className="flex items-center justify-between mb-1">
+          <h1 className="text-[28px] font-extrabold tracking-tight max-[768px]:text-[22px] max-[480px]:text-xl">
+            {selectedProject}
+          </h1>
+          <button
+            onClick={() => selectProject(null)}
+            className="px-3.5 py-1.5 rounded-xs border border-border bg-card text-muted-foreground text-[13px] font-semibold shadow-xs hover:border-accent/30 hover:text-accent transition-all"
+          >
+            ← Back
+          </button>
+        </div>
         <p className="text-[13.5px] text-muted-foreground mt-1.5 max-[768px]:text-[12.5px]">
           {filtered.length} report{filtered.length !== 1 ? 's' : ''} in this zone · {project?.count || 0} total tracked
         </p>

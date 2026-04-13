@@ -88,13 +88,24 @@
 @layer base {
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
   }
+
+  *:focus,
+  *:active {
+    outline: none;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
+
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -102,46 +113,104 @@
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: hsl(260 20% 88%); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(260 20% 80%); }
-::selection { background: hsl(270 42% 52% / 0.18); }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(260 20% 88%);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(260 20% 80%);
+}
+
+::selection {
+  background: hsl(270 42% 52% / 0.18);
+}
 
 /* Animations */
 @keyframes fadeUp {
-  from { transform: translateY(14px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
+
 @keyframes sideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
+
 @keyframes modalIn {
-  from { transform: scale(0.92) translateY(18px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
+  from {
+    transform: scale(0.92) translateY(18px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
+
 @keyframes fabIn {
-  from { transform: scale(0) rotate(-90deg); opacity: 0; }
-  to { transform: scale(1) rotate(0deg); opacity: 1; }
+  from {
+    transform: scale(0) rotate(-90deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
 }
+
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
+
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-fade-up {
   animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .animate-side-in {
   animation: sideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .animate-modal-in {
   animation: modalIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .animate-fab-in {
   animation: fabIn 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -149,4 +218,13 @@
 /* Mono font utility */
 .font-mono-code {
   font-family: 'Fira Code', monospace;
+}
+
+/* Leaflet overrides */
+.leaflet-control-attribution {
+  display: none !important;
+}
+
+.leaflet-container {
+  z-index: 1 !important;
 }

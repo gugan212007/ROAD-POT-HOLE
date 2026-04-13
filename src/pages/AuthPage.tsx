@@ -18,9 +18,9 @@ const AuthPage = () => {
         style={{ boxShadow: '0 24px 80px rgba(107,63,160,0.35), 0 4px 16px rgba(0,0,0,0.10)' }}
       >
         {/* Logo */}
-        <div className="w-12 h-12 rounded-[13px] mx-auto mb-6 flex items-center justify-center text-[22px]"
-          style={{ background: 'linear-gradient(135deg, #7c4dba, #c2537a)', boxShadow: '0 6px 24px rgba(124,77,186,0.35)' }}>
-          🛣️
+        <div className="w-16 h-16 rounded-[13px] mx-auto mb-6 overflow-hidden"
+          style={{ background: '#1a1545', boxShadow: '0 6px 24px rgba(124,77,186,0.35)' }}>
+          <img src="/civicfix_logo.png" alt="CivicFix Logo" className="block w-full h-full object-cover" style={{ transform: 'scale(1.45)' }} />
         </div>
         <div className="text-center mb-7">
           <h1 className="text-[22px] font-extrabold tracking-tight">CivicFix</h1>

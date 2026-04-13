@@ -7,13 +7,12 @@ const AppSidebar = () => {
 
   const items = user.is_admin
     ? [{ ico: '◈', lbl: 'All Reports', pg: 'admin' }, { ico: '◎', lbl: 'Analytics', pg: 'analytics' }]
-    : [{ ico: '⬡', lbl: 'Dashboard', pg: 'dashboard' }, { ico: '◉', lbl: 'My Reports', pg: 'myreports' }];
+    : [{ ico: '🏠', lbl: 'Home', pg: 'dashboard' }, { ico: '◉', lbl: 'My Reports', pg: 'myreports' }, { ico: '📍', lbl: 'Near Me', pg: 'nearme' }];
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen w-[260px] md:w-[260px] flex flex-col py-7 px-4 gap-0.5 z-[200] md:z-[100] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:translate-x-0 ${
-        mobileMenu ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      className={`fixed left-0 top-0 h-screen w-[260px] md:w-[260px] flex flex-col py-7 px-4 gap-0.5 z-[200] md:z-[100] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:translate-x-0 ${mobileMenu ? 'translate-x-0' : '-translate-x-full'
+        }`}
       style={{
         background: 'linear-gradient(160deg, #6b3fa0 0%, #b24f7a 45%, #d97a58 100%)',
         boxShadow: '4px 0 32px hsl(271 45% 44% / 0.30)',
@@ -29,8 +28,8 @@ const AppSidebar = () => {
 
       {/* Brand */}
       <div className="flex items-center gap-3 px-3 pb-5 mb-1 border-b border-white/[0.14] relative z-10">
-        <div className="w-9 h-9 bg-white/[0.22] rounded-[10px] flex items-center justify-center text-lg border border-white/30 backdrop-blur-sm shrink-0">
-          🛣️
+        <div className="w-9 h-9 rounded-[10px] overflow-hidden shrink-0" style={{ background: '#1a1545' }}>
+          <img src="/civicfix_logo.png" alt="CivicFix Logo" className="block w-full h-full object-cover" style={{ transform: 'scale(1.45)' }} />
         </div>
         <div>
           <div className="text-lg font-extrabold text-white tracking-tight">CivicFix</div>
@@ -44,28 +43,27 @@ const AppSidebar = () => {
         <button
           key={n.pg}
           onClick={() => navigate(n.pg)}
-          className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] border border-transparent w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${
-            page === n.pg && !selectedProject
-              ? 'bg-white/[0.18] text-white font-semibold border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
-              : 'text-white/55 hover:bg-white/10 hover:text-white/90 hover:translate-x-0.5'
-          }`}
+          className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] border border-transparent w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${page === n.pg && !selectedProject
+            ? 'bg-white/[0.18] text-white font-semibold border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
+            : 'text-white/55 hover:bg-white/10 hover:text-white/90 hover:translate-x-0.5'
+            }`}
         >
           <span className="w-5 text-center text-sm shrink-0">{n.ico}</span>
           {n.lbl}
         </button>
       ))}
 
-      {/* Projects */}
-      <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-white/35 px-3 pt-5 pb-1 relative z-10">Projects</div>
+
+      {/* Damages */}
+      <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-white/35 px-3 pt-5 pb-1 relative z-10">Damages</div>
       {PROJECTS.map((p, i) => (
         <button
           key={p.name}
           onClick={() => selectProject(selectedProject === p.name ? null : p.name)}
-          className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${
-            selectedProject === p.name
-              ? 'bg-white/[0.18] text-white font-semibold border border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
-              : 'text-white/55 hover:bg-white/10 hover:text-white/90 border border-transparent opacity-90'
-          }`}
+          className={`flex items-center gap-2.5 py-2.5 px-3 rounded-[10px] w-full text-left text-sm font-medium transition-all duration-200 relative z-10 ${selectedProject === p.name
+            ? 'bg-white/[0.18] text-white font-semibold border border-white/20 shadow-[0_2px_12px_rgba(0,0,0,0.10),inset_0_1px_0_rgba(255,255,255,0.15)]'
+            : 'text-white/55 hover:bg-white/10 hover:text-white/90 border border-transparent opacity-90'
+            }`}
         >
           <span className="w-5 text-center shrink-0">
             <span className="inline-block w-2 h-2 rounded-full" style={{ background: PROJECT_COLORS[i % PROJECT_COLORS.length] }} />
@@ -78,12 +76,6 @@ const AppSidebar = () => {
       ))}
 
       <div className="flex-1" />
-
-      {user.is_admin && (
-        <div className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-pill bg-white/[0.18] text-white/90 text-[10px] font-bold tracking-[0.08em] uppercase border border-white/[0.22] mb-2.5 w-fit relative z-10">
-          🔐 Administrator
-        </div>
-      )}
 
       {/* Footer */}
       <div className="pt-4 border-t border-white/[0.14] relative z-10">
